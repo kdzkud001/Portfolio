@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kudzaishe Kadzimu — Electrical &amp; Computer Engineer</title>
+<meta name="description" content="Kudzaishe Kadzimu — Electrical and Computer Engineering Master's student focused on embedded systems, circuit design, and applied computer vision.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8F5;
+    --panel:#FFFFFF;
+    --ink:#16211C;
+    --ink-soft:#4B5750;
+    --ink-faint:#7C8880;
+    --trace:#1B4332;
+    --trace-soft:#2F5240;
+    --copper:#B5793A;
+    --copper-bright:#C98A44;
+    --hairline:#DCE1DA;
+    --tag-bg:#EEF1EC;
+    --max:920px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--copper); color:#fff; }
+
+  a{ color:var(--trace); text-decoration:none; }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--copper);
+    font-weight:600;
+  }
+
+  h1,h2,h3{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink);
+    margin:0;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  p{ margin:0; }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(247,248,245,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:16px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-mark{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:0.92rem;
+    color:var(--ink);
+  }
+  .nav-mark .via{
+    width:9px; height:9px;
+    background:var(--copper);
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap:26px;
+    margin:0;
+    padding:0;
+  }
+  nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-bottom:3px;
+    border-bottom:1px solid transparent;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  nav a:hover{ color:var(--trace); border-bottom-color:var(--copper); }
+  #nav-toggle{ display:none; }
+  .burger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+    background:none;
+    border:none;
+    padding:6px;
+  }
+  .burger span{ width:22px; height:2px; background:var(--ink); display:block; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:88px 0 76px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .hero .label{ display:flex; align-items:center; gap:8px; margin-bottom:22px; }
+  .hero .label .via{ width:8px; height:8px; background:var(--copper); border-radius:2px; }
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.2rem);
+    line-height:1.1;
+  }
+  .hero .role{
+    margin-top:14px;
+    color:var(--trace);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:clamp(1rem, 2vw, 1.15rem);
+    font-weight:500;
+  }
+  .hero .desc{
+    margin-top:22px;
+    max-width:56ch;
+    color:var(--ink-soft);
+    font-size:1.03rem;
+  }
+  .hero .cta-row{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:12px 20px;
+    border-radius:3px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-solid{
+    background:var(--trace);
+    color:#fff;
+    border:1px solid var(--trace);
+  }
+  .btn-solid:hover{ background:var(--trace-soft); transform:translateY(-1px); }
+  .btn-outline{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--hairline);
+  }
+  .btn-outline:hover{ border-color:var(--copper); color:var(--copper); transform:translateY(-1px); }
+
+  /* ---------- Schematic rail layout ---------- */
+  .schematic{
+    position:relative;
+  }
+  .rail{
+    border-left:2px solid var(--hairline);
+    margin-left:9px;
+  }
+  section.node{
+    position:relative;
+    padding:64px 0 64px 42px;
+    border-bottom:1px solid var(--hairline);
+  }
+  section.node:last-of-type{ border-bottom:none; }
+  section.node::before{
+    content:'';
+    position:absolute;
+    left:-8px;
+    top:70px;
+    width:12px; height:12px;
+    background:var(--bg);
+    border:2px solid var(--copper);
+    border-radius:2px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:34px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{ font-size:1.5rem; }
+  .section-head .idx{
+    color:var(--ink-faint);
+    font-size:0.85rem;
+  }
+
+  /* ---------- About ---------- */
+  .about-body{ max-width:64ch; color:var(--ink-soft); font-size:1.02rem; }
+  .about-body p + p{ margin-top:14px; }
+  .stat-row{
+    display:flex;
+    gap:36px;
+    margin-top:32px;
+    flex-wrap:wrap;
+  }
+  .stat{ min-width:120px; }
+  .stat .num{ font-family:'IBM Plex Mono', monospace; font-size:1.6rem; font-weight:600; color:var(--trace); }
+  .stat .cap{ font-size:0.78rem; color:var(--ink-faint); margin-top:4px; text-transform:uppercase; letter-spacing:0.06em; }
+
+  /* ---------- Experience ---------- */
+  .xp-item + .xp-item{ margin-top:40px; }
+  .xp-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    margin-bottom:6px;
+  }
+  .xp-role{ font-weight:600; font-size:1.06rem; }
+  .xp-org{ color:var(--trace); font-weight:500; }
+  .xp-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    white-space:nowrap;
+  }
+  .xp-list{
+    margin:14px 0 0;
+    padding-left:18px;
+    color:var(--ink-soft);
+  }
+  .xp-list li + li{ margin-top:8px; }
+
+  /* ---------- Projects ---------- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  .proj-card{
+    background:var(--panel);
+    border:1px solid var(--hairline);
+    border-radius:4px;
+    padding:26px;
+    transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .proj-card:hover{
+    border-color:var(--copper);
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px -16px rgba(27,67,50,0.35);
+  }
+  .proj-card .proj-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-faint);
+  }
+  .proj-card h3{
+    font-size:1.08rem;
+    margin-top:8px;
+  }
+  .proj-card p{
+    margin-top:12px;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+  }
+  .stack-row{
+    margin-top:16px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    background:var(--tag-bg);
+    color:var(--trace-soft);
+    padding:4px 9px;
+    border-radius:3px;
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-group + .skill-group{ margin-top:26px; }
+  .skill-group .cap{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-faint);
+    margin-bottom:10px;
+  }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{
+    font-size:0.86rem;
+    padding:6px 13px;
+    border:1px solid var(--hairline);
+    border-radius:20px;
+    color:var(--ink-soft);
+    background:var(--panel);
+  }
+
+  /* ---------- Education ---------- */
+  .edu-item + .edu-item{ margin-top:32px; }
+  .edu-top{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px 20px;
+  }
+  .edu-school{ font-weight:600; font-size:1.06rem; }
+  .edu-degree{ color:var(--trace); margin-top:2px; }
+  .edu-date{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink-faint); white-space:nowrap; }
+  .edu-meta{ color:var(--ink-soft); margin-top:8px; font-size:0.94rem; }
+  .honors{ margin-top:36px; }
+  .honors .cap{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-faint);
+    margin-bottom:12px;
+  }
+  .honors ul{ margin:0; padding-left:18px; color:var(--ink-soft); }
+  .honors li + li{ margin-top:6px; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:30px;
+  }
+  .contact-lead{ max-width:42ch; color:var(--ink-soft); font-size:1.02rem; }
+  .contact-links{ display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+  .contact-links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.92rem;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .contact-links a:hover{ color:var(--copper); }
+  .contact-links a .via{ width:6px; height:6px; background:var(--copper); border-radius:1px; }
+
+  footer{
+    border-top:1px solid var(--hairline);
+    padding:26px 0 40px;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .node{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .node.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .node{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:760px){
+    nav ul{
+      position:fixed;
+      top:60px; left:0; right:0;
+      background:var(--bg);
+      border-bottom:1px solid var(--hairline);
+      flex-direction:column;
+      gap:0;
+      padding:8px 28px 18px;
+      transform:translateY(-130%);
+      transition:transform .22s ease;
+    }
+    #nav-toggle:checked ~ nav ul{ transform:translateY(0); }
+    nav a{ padding:12px 0; border-bottom:1px solid var(--hairline); width:100%; }
+    .burger{ display:flex; }
+    .rail{ border-left:none; margin-left:0; }
+    section.node{ padding:44px 0; }
+    section.node::before{ display:none; }
+    .proj-grid{ grid-template-columns:1fr; }
+    .contact-grid{ flex-direction:column; align-items:flex-start; }
+    .contact-links{ align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="via"></span>K. KADZIMU</div>
+    <input type="checkbox" id="nav-toggle">
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <label class="burger" for="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </label>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="label"><span class="via"></span>ELECTRICAL &amp; COMPUTER ENGINEER</div>
+    <h1>Kudzaishe Kadzimu</h1>
+    <div class="role">Embedded systems · circuit design · applied computer vision</div>
+    <p class="desc">M.S. Electrical and Computer Engineering student at Rutgers University, building the bridge between hardware and software — from ADC/DAC signal chains to motor control and real-time vision systems.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#projects">View projects</a>
+      <a class="btn btn-outline" href="resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+      <a class="btn btn-outline" href="mailto:kmk436@scarletmail.rutgers.edu">Email me</a>
+    </div>
+  </section>
+
+  <div class="schematic">
+    <div class="rail">
+
+      <section id="about" class="node">
+        <div class="section-head"><h2>About</h2></div>
+        <div class="about-body">
+          <p>I'm a graduate researcher and engineer focused on the layer where circuits meet code — signal chains, embedded firmware, and the control logic that makes hardware behave predictably in the real world. My work spans lab-scale control systems, low-power sensor design, and computer-vision-driven robotics.</p>
+          <p>Currently completing my Master's at Rutgers after a Bachelor's (Honours) in Electrical and Computer Engineering at the University of Cape Town, where I also tutored and mentored undergraduate students in electronics and computer science.</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">3.87</div><div class="cap">Grad GPA</div></div>
+          <div class="stat"><div class="num">99%</div><div class="cap">ADC/DAC signal accuracy</div></div>
+          <div class="stat"><div class="num">200+</div><div class="cap">Students supported</div></div>
+        </div>
+      </section>
+
+      <section id="experience" class="node">
+        <div class="section-head"><h2>Experience</h2></div>
+
+        <div class="xp-item">
+          <div class="xp-top">
+            <div><span class="xp-role">Lab Technician</span> — <span class="xp-org">University of Cape Town</span></div>
+            <div class="xp-date">JUN – JUL 2024</div>
+          </div>
+          <ul class="xp-list">
+            <li>Designed and implemented lab-scale control systems using system design methodologies, supporting hands-on learning for 200+ students.</li>
+            <li>Built interfaces bridging hardware and software through ADC/DAC integration, achieving 99% signal accuracy.</li>
+            <li>Ran calibration and specification-development protocols that cut lab equipment downtime by 15%.</li>
+          </ul>
+        </div>
+
+        <div class="xp-item">
+          <div class="xp-top">
+            <div><span class="xp-role">Content Developer</span> — <span class="xp-org">Fundamanje</span></div>
+            <div class="xp-date">2023 – 2024</div>
+          </div>
+          <ul class="xp-list">
+            <li>Created technical tutorials and assessment content using system design frameworks, lifting student engagement by 30%.</li>
+            <li>Produced 50+ educational resources aligned to industry standards and engineering curriculum requirements.</li>
+            <li>Analyzed learner interaction data to refine video scripts, contributing to a 20% increase in long-term retention across the STEM program.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="projects" class="node">
+        <div class="section-head"><h2>Projects</h2></div>
+        <div class="proj-grid">
+
+          <div class="proj-card">
+            <div class="proj-year">2024</div>
+            <h3>Augmented Reality Robot Driver</h3>
+            <p>Real-time web application for autonomous robot navigation, fusing live camera streams with ArUco marker tracking for spatial awareness. Applied hardware protocols to keep data transmission seamless between the robotic chassis and the central control interface.</p>
+            <div class="stack-row">
+              <span class="tag">PYTHON</span><span class="tag">REACT</span><span class="tag">ARUCO</span><span class="tag">COMPUTER VISION</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-year">2023</div>
+            <h3>Bird Monitoring Device</h3>
+            <p>Low-power monitoring device built around defined sensor communication protocols, extending battery life by 25%. Infrared sensor arrays deliver reliable detection across varied environmental conditions.</p>
+            <div class="stack-row">
+              <span class="tag">ESP32</span><span class="tag">INFRARED</span><span class="tag">C++</span><span class="tag">EMBEDDED</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="skills" class="node">
+        <div class="section-head"><h2>Skills</h2></div>
+
+        <div class="skill-group">
+          <div class="cap">Programming Languages</div>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">C/C++</span><span class="chip">Java</span><span class="chip">PHP</span><span class="chip">Verilog</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="cap">Engineering Expertise</div>
+          <div class="chip-row">
+            <span class="chip">Embedded systems</span><span class="chip">System design</span><span class="chip">Circuit analysis</span><span class="chip">Motor control</span><span class="chip">Signal processing</span><span class="chip">Computer vision</span><span class="chip">Classification algorithms</span><span class="chip">Robotics &amp; prototyping</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="cap">Hardware Integration</div>
+          <div class="chip-row">
+            <span class="chip">ADC/DAC circuits</span><span class="chip">Sensor communication protocols</span><span class="chip">Infrared sensor arrays</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="cap">Tools &amp; Platforms</div>
+          <div class="chip-row">
+            <span class="chip">Git</span><span class="chip">VS Code</span><span class="chip">Arduino</span><span class="chip">Raspberry Pi</span><span class="chip">ESP32</span><span class="chip">FPGA</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="cap">Web Technologies</div>
+          <div class="chip-row">
+            <span class="chip">React</span><span class="chip">Django</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" class="node">
+        <div class="section-head"><h2>Education</h2></div>
+
+        <div class="edu-item">
+          <div class="edu-top">
+            <div class="edu-school">Rutgers University, New Jersey</div>
+            <div class="edu-date">2025 – PRESENT</div>
+          </div>
+          <div class="edu-degree">Master of Science, Electrical and Computer Engineering</div>
+          <div class="edu-meta">GPA: 3.87</div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-top">
+            <div class="edu-school">University of Cape Town</div>
+            <div class="edu-date">2021 – 2024</div>
+          </div>
+          <div class="edu-degree">Bachelor of Science (Honours), Electrical and Computer Engineering</div>
+        </div>
+
+        <div class="honors">
+          <div class="cap">Honors &amp; Distinctions</div>
+          <ul>
+            <li>Dean's List, third year of studies (year GPA: 72.3%)</li>
+            <li>Selected to tutor Computer Science and Electronics courses</li>
+            <li>Chosen as a Mentor for junior students, 2024</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact" class="node">
+        <div class="section-head"><h2>Contact</h2></div>
+        <div class="contact-grid">
+          <p class="contact-lead">Open to R&amp;D engineering roles and conversations around embedded systems, hardware-software integration, and applied computer vision.</p>
+          <div class="contact-links">
+            <a href="mailto:kmk436@scarletmail.rutgers.edu"><span class="via"></span>kmk436@scarletmail.rutgers.edu</a>
+            <a href="https://github.com/" target="_blank" rel="noopener"><span class="via"></span>github.com/your-username</a>
+            <a href="https://linkedin.com/" target="_blank" rel="noopener"><span class="via"></span>linkedin.com/in/your-profile</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 KUDZAISHE KADZIMU</span>
+    <span>REV 2026.08 · NEW JERSEY, US</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('nav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      var toggle = document.getElementById('nav-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
+
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.node').forEach(function(n){ obs.observe(n); });
+  } else {
+    document.querySelectorAll('.node').forEach(function(n){ n.classList.add('in'); });
+  }
+</script>
+
+</body>
+</html>
